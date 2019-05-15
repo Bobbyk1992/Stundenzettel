@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 
 from src.controller.main.MainController import MainController
 from src.controller.error.ErrorController import ErrorController
