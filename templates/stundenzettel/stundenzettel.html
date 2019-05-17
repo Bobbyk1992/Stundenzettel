@@ -1,0 +1,154 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+  <div class="row mb-4">
+    <div class="col-12 offset-xl-2 col-xl-8 text-center">
+      <h1 class="h1">Zeiterfassung</h1>
+      <h2 class="h2">Stundenzettel</h2>
+    </div>
+  </div>
+
+  <div class="mx-auto" style="width: 1000px">
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <div class="input-group mb-3 w-75">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">Von:</span>
+            </div>
+              <input type="text" class="form-control" id="vonDatum" aria-describedby="basic-addon3" placeholder="tt.mm.jjjj">
+            </div>
+          </div>
+        <div class="col-3">
+          <div class="input-group mb-3 w-75">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon2">Bis:</span>
+            </div>
+            <input type="text" class="form-control" id="bisDatum" aria-describedby="basic-addon3" placeholder="tt.mm.jjjj">
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="input-group mb-3 w-75">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">KW:</span>
+            </div>
+            <input type="text" class="form-control" id="KW" aria-describedby="basic-addon3">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-3 mb-2 bg-primary text-white">Personalnummer: 3 User: Walter</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto" style="width: 1000px">
+    <div class="card text-white border-secondary bg-primary">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Datum</th>
+              <th scope="col">Bestellnummer</th>
+              <th scope="col">Dauer</th>
+              <th scope="col">Nr</th>
+              <th scope="col">Leistung</th>
+              <th scope="col">Objektnr</th>
+              <th scope="col">Objektname</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colspan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mx-auto pt-4" style="width: 1000px">
+      <div class="row">
+        <div class="col-2">
+          <p class="text-primary">Soll:</p>
+          <p class="text-primary">Ist:</p>
+        </div>
+          <div class="float-right">
+            <span class="badge badge-primary mx-auto">Montag:</span>
+            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-primary mx-auto">Dienstag:</span>
+            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-primary mx-auto">Mittwoch:</span>
+            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-primary mx-auto">Donnerstag:</span>
+            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-primary mx-auto">Freitag:</span>
+            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-primary mx-auto">Samstag:</span>
+            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-primary mx-auto">Sonntag:</span>
+            <span class="badge badge-light mx-auto">0</span>
+          </div>
+      </div>
+ </div>
+
+  <div class="mx-auto pt-3" style="width: 1000px">
+    <button type="button" class="btn btn-primary">Bearbeiten</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLeistung">Leistung</button>
+      <div class="modal fade bd-example-modal-lg" id="modalLeistung" tabindex="-1" role="dialog" aria-labelledby="modalLeistungLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLeistungLabel">Stundenzettel Eingabe</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row">
+                <label for="col2" class="col-sm-2 col-form-label col-form-label-sm">Objektnummer</label>
+                  <div class="col-sm-2">
+                    <input type="email" class="form-control form-control-sm" id="col2" placeholder="z.B. 0003">
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary btn-sm">Objektsuche</button>
+                  </div>
+                  <label for="col3" class="col-sm-1 col-form-label col-form-label-sm">WV:</label>
+                  <div class="col-sm-2">
+                    <input type="email" class="form-control form-control-sm" id="col3" placeholder="col-form-label-sm">
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <button type="button" class="btn btn-primary">Reisekosten</button>
+    <button type="button" class="btn btn-primary">Sonstiges</button>
+
+    <div class="float-right">
+      <button type="button" class="btn btn-primary">Arbeitszeit</button>
+      <button type="button" class="btn btn-primary">Drucken</button>
+      <button type="button" class="btn btn-primary">Loeschen</button>
+      <button type="button" class="btn btn-primary">Freigabe</button>
+    </div>
+  </div>
+
+{% endblock %}

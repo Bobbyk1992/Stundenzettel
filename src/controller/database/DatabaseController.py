@@ -2,24 +2,29 @@ from flask import session
 from os import getenv
 import pymssql
 import time
+from ..Controller import Controller
 
-"""server = getenv("127.0.0.1\SQLEXPRESS")
-user = getenv("sa")
-password = getenv("Achilles")"""
+class DatabaseController(Controller):
 
-server = r'Desktop-3BRBS77\Sqlexpress'
-user = r'sa'
-password = 'Achilles'
+    def __init__(self, server=r'Desktop-3BRBS77\Sqlexpress' , user=r'sa', password='Achilles', db='Zeiterfassung'):
 
-conn = pymssql.connect(host=server, user=user, password=password, database="Zeiterfassung")
-cursor = conn.cursor()
-"""cursor.execute('Select * From LoginProtokoll')"""
-cursor.execute("Insert Into LoginProtokoll(Gescannt, Personalnummer , Zeitpunkt) Values ('GH34', 12, CURRENT_TIMESTAMP)")
-conn.commit()
+        self.dbserver = server
+        self.dbuser = user
+        self.dbpassword = password
+        self.dbname = db
+        self.client = pymssql.connect(host=self.dbserver, user=self.dbuser, password=self.dbpassword, database=self.dbname)
+        self.cursor = self.client.cursor()
 
-"""for row in cursor:
-    print('row = %r' % (row,))"""
+    def get_information(self, table, where):
 
-"""print(cursor.fetchall())"""
+        if where:
+            self.cursor.execute('Select * FROM ' & table &  'where ' & where )
 
-conn.close()
+        else:
+            self.cursor.execute('Select * FROM ' & table)
+
+    def insert_information(self, table, col, val):
+
+        self.cursor.execute('Insert Into ' & table & ' (' & col & ' ) Values (' & val & ' )')
+
+

@@ -3,6 +3,7 @@ from flask import Flask
 from src.controller.main.MainController import MainController
 from src.controller.error.ErrorController import ErrorController
 from src.controller.login.LoginController import LoginController
+from src.controller.stundenzettel.StundenzettelController import StundenzettelController
 
 app = Flask(__name__)
 
@@ -12,6 +13,10 @@ def index():
     obj = MainController()
     return obj.index()
 
+@app.route('/stundenzettel')
+def stundenzettel_form():
+    obj = StundenzettelController()
+    return obj.get_stundenzettel_form()
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_form():
