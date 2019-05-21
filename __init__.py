@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, session , redirect, url_for, request, render_template
 
 from src.controller.main.MainController import MainController
 from src.controller.error.ErrorController import ErrorController
 from src.controller.login.LoginController import LoginController
 from src.controller.stundenzettel.StundenzettelController import StundenzettelController
+
 
 app = Flask(__name__)
 
@@ -15,14 +16,24 @@ def index():
 
 @app.route('/stundenzettel')
 def stundenzettel_form():
-    obj = StundenzettelController()
-    return obj.get_stundenzettel_form()
+
+    if 'role' not in session or session['role'] != 'user':
+        return redirect(url_for('login_form'))
+
+    return render_template('stundenzettel/stundenzettel.html', success=request.args.get('success'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_form():
-    obj = LoginController()
-    return obj.get_login_form()
+    if 'role' not in session:
+        obj = LoginController()
+        return obj.get_login_form()
 
+    return redirect(url_for(session['defaultRoute']))
+
+@app.route('/logout')
+def logout():
+    obj = LoginController()
+    return obj.logout()
 
 @app.errorhandler(400)
 def internal_error(error):
