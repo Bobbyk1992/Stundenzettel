@@ -19,13 +19,13 @@ class Login(AbstractLogin):
         self.get_login_information()
 
         for personal in self.user:
-            if request.form['login-username'] == personal['Personalnummer'] and request.form['login-password'] == personal['Password']:
-                information = {'role': 'user', 'route': 'stundenzettel', 'redirect': 'stundenzettel'}
+            if int(request.form['login-username']) == personal['Personalnummer'] and request.form['login-password'] == personal['Password']:
+                information = {'role': 'user', 'route': 'stundenzettel_form', 'redirect': 'stundenzettel_form'}
 
         return information
 
     def login(self, information):
-        session['Personalnummer'] = request.form['login-username']
+        session['Personalnummer'] = int(request.form['login-username'])
         session['role'] = information['role']
         session['defaultRoute'] = information['route']
 

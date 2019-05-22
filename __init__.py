@@ -7,7 +7,7 @@ from src.controller.stundenzettel.StundenzettelController import StundenzettelCo
 
 
 app = Flask(__name__)
-
+app.secret_key = b'_87fgT%6#8jsd32\n\xec]/'
 
 @app.route('/')
 def index():
