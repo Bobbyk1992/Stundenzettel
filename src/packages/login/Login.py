@@ -7,6 +7,8 @@ class Login(AbstractLogin):
     def __init__(self):
         super().__init__()
 
+        self.user = []
+
     def get_login_information(self):
         db = DatabaseController()
 
@@ -20,7 +22,7 @@ class Login(AbstractLogin):
             if request.form['login-username'] == personal['Personalnummer'] and request.form['login-password'] == personal['Password']:
                 information = {'role': 'user', 'route': 'stundenzettel', 'redirect': 'stundenzettel'}
 
-                return information
+        return information
 
     def login(self, information):
         session['Personalnummer'] = request.form['login-username']

@@ -6,7 +6,7 @@ from src.packages.login import Login
 class LoginController(Controller):
 
     def __init__(self):
-        self.superusers = []
+        self.user = []
         self.stations = []
 
     def get_login_form(self):
