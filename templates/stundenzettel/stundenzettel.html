@@ -7,6 +7,13 @@
       <h1 class="h1">Zeiterfassung</h1>
       <h2 class="h2">Stundenzettel</h2>
     </div>
+    <div class="mx-auto" style="width: 1000px">
+      <div class="float-right">
+        <div class="col-4">
+          <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="mx-auto" style="width: 1000px">
@@ -37,7 +44,7 @@
           </div>
         </div>
         <div class="col-4">
-          <div class="p-3 mb-2 bg-primary text-white">Personalnummer: 3 User: Fritz</div>
+          <div class="p-3 mb-2 bg-primary text-white">Personalnummer: {{ personal[0]["Personalnummer"] }} User: {{ personal[0]["Name"] }}</div>
         </div>
       </div>
     </div>
@@ -60,23 +67,18 @@
             </tr>
           </thead>
           <tbody>
+            {% for row in daten %}
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ row.Datum }}</td>
+              <td>Bestellnummer</td>
+              <td>{{ row.Stunden }} Std.</td>
+              <td>{{ row.Titel_Nr }}.{{ row.Untertitel_Nr}}</td>
+              <td>{{ row.Leistung }}</td>
+              <td>{{ row.Objektnr }}</td>
+              <td>{{ row.Objektname }}</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -89,25 +91,25 @@
         </div>
           <div class="float-right">
             <span class="badge badge-primary mx-auto">Montag:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[0][0]["SummeStd"] }}</span>
             <span class="badge badge-primary mx-auto">Dienstag:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[1][0]["SummeStd"] }}</span>
             <span class="badge badge-primary mx-auto">Mittwoch:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[2][0]["SummeStd"] }}</span>
             <span class="badge badge-primary mx-auto">Donnerstag:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[3][0]["SummeStd"] }}</span>
             <span class="badge badge-primary mx-auto">Freitag:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[4][0]["SummeStd"] }}</span>
             <span class="badge badge-primary mx-auto">Samstag:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[5][0]["SummeStd"] }}</span>
             <span class="badge badge-primary mx-auto">Sonntag:</span>
-            <span class="badge badge-light mx-auto">0</span>
+            <span class="badge badge-light mx-auto">{{ day[6][0]["SummeStd"] }}</span>
           </div>
       </div>
  </div>
 
   <div class="mx-auto pt-3" style="width: 1000px">
-    <button type="button" class="btn btn-primary">Bearbeiten</button>
+    <button type="submit" class="btn btn-primary">Bearbeiten</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLeistung">Leistung</button>
       <div class="modal fade bd-example-modal-lg" id="modalLeistung" tabindex="-1" role="dialog" aria-labelledby="modalLeistungLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">

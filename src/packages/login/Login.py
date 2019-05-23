@@ -12,7 +12,7 @@ class Login(AbstractLogin):
     def get_login_information(self):
         db = DatabaseController()
 
-        self.user = db.get_one_information()
+        self.user = db.get_one_information('Mitarbeiter')
 
     def validate_login_request(self):
         information = None

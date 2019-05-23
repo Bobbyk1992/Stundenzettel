@@ -1,0 +1,1 @@
+from src.packages.stundenzettel.abstract.AbstractStundenzettel import AbstractStundenzettel

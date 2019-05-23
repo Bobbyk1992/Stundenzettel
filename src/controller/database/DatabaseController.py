@@ -19,15 +19,19 @@ class DatabaseController(Controller):
 
     def get_many_information(self, table, where):
 
-        if where:
-            self.cursor.executemany('Select * FROM ' & table & 'where ' & where)
+            self.cursor.execute('Select * FROM ' + table + ' where ' + where)
+            tables = self.cursor.fetchall()
+            return tables
 
-        else:
-            self.cursor.executemany('Select * FROM ' & table)
+    def get_one_information(self, table):
 
-    def get_one_information(self):
+            self.cursor.execute(' Select * FROM ' + table)
+            tables = self.cursor.fetchall()
+            return tables
 
-            self.cursor.execute(' Select * FROM Mitarbeiter ')
+    def get_selected_information(self, field, table, where):
+
+            self.cursor.execute('Select ' + field + ' FROM ' + table + ' where ' + where)
             tables = self.cursor.fetchall()
             return tables
 

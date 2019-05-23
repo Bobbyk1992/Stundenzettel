@@ -14,13 +14,15 @@ def index():
     obj = MainController()
     return obj.index()
 
-@app.route('/stundenzettel')
+@app.route('/stundenzettel', methods=['GET', 'POST'])
 def stundenzettel_form():
 
     if 'role' not in session or session['role'] != 'user':
         return redirect(url_for('login_form'))
 
-    return render_template('stundenzettel/stundenzettel.html', success=request.args.get('success'))
+    obj = StundenzettelController()
+    return obj.get_stundenzettel_form()
+    """return render_template('stundenzettel/stundenzettel.html', success=request.args.get('success'))"""
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_form():
