@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<form action="/stundenzettel" method="post">
   <div class="row mb-4">
     <div class="col-12 offset-xl-2 col-xl-8 text-center">
       <h1 class="h1">Zeiterfassung</h1>
@@ -16,6 +17,7 @@
     </div>
   </div>
 
+
   <div class="mx-auto" style="width: 1000px">
     <div class="container">
       <div class="row">
@@ -24,15 +26,15 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon3">Von:</span>
             </div>
-              <input type="text" class="form-control" id="vonDatum" aria-describedby="basic-addon3" placeholder="tt.mm.jjjj">
+              <input type="date" name="vonDatum" class="form-control" id="vonDatum" aria-describedby="basic-addon3" placeholder="tt.mm.jjjj">
             </div>
-          </div>
+        </div>
         <div class="col-3">
           <div class="input-group mb-3 w-75">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon2">Bis:</span>
             </div>
-            <input type="text" class="form-control" id="bisDatum" aria-describedby="basic-addon3" placeholder="tt.mm.jjjj">
+            <input type="date" name="bisDatum" class="form-control" id="bisDatum" aria-describedby="basic-addon2" placeholder="tt.mm.jjjj">
           </div>
         </div>
         <div class="col-2">
@@ -40,7 +42,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">KW:</span>
             </div>
-            <input type="text" class="form-control" id="KW" aria-describedby="basic-addon3">
+            <input type="text" class="form-control" id="KW" aria-describedby="basic-addon3" value="{{ kw[0]["Kalenderwoche"] }}">
           </div>
         </div>
         <div class="col-4">
@@ -585,5 +587,5 @@
       </div>
   </div>
   </div>
-
+</form>
 {% endblock %}

@@ -29,11 +29,25 @@ class DatabaseController(Controller):
             tables = self.cursor.fetchall()
             return tables
 
-    def get_selected_information(self, field, table, where):
+    def get_selected_information(self, field, table=None, where=None):
 
-            self.cursor.execute('Select ' + field + ' FROM ' + table + ' where ' + where)
-            tables = self.cursor.fetchall()
-            return tables
+          if where is not None and table is not None and field is not None:
+                self.cursor.execute('Select ' + field + ' FROM ' + table + ' where ' + where)
+                tables = self.cursor.fetchall()
+                return tables
+
+          elif where is None and table is not None and field is not None:
+                self.cursor.execute('Select ' + field + ' FROM ' + table)
+                tables = self.cursor.fetchall()
+                return tables
+
+          elif where is None and table is None and field is not None:
+                self.cursor.execute('Select ' + field )
+                tables = self.cursor.fetchall()
+                return tables
+
+          else:
+              print('Du hast keine Parameter übergeben!!!')
 
     def insert_information(self, table, col, val):
 

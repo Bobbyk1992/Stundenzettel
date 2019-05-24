@@ -42,14 +42,30 @@ class Stundenzettel(AbstractStundenzettel):
 
         db = DatabaseController()
 
-        vonDatum = request.form['vonDatum']
-        bisDatum = request.form['bisDatum']
+        vonDatum = request.form.get('vonDatum', False)
+        bisDatum = request.form.get('bisDatum', False)
+        vonDatum = datetime.strptime(vonDatum, "%Y-%m-%d").strftime("%d.%m.%Y")
+        bisDatum = datetime.strptime(bisDatum, "%Y-%m-%d").strftime("%d.%m.%Y")
 
         if vonDatum == None or bisDatum == None:
 
             vonDatum = ' '
             bisDatum = ' '
 
-        info = 'between ' + vonDatum + ' And ' + bisDatum
+        info = ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" + ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'"
         info = str(info)
+        return info
+
+    def get_kalenderwoche_stundenzettel(self):
+
+        db = DatabaseController()
+        info = ' '
+        vonDatum = request.form.get('vonDatum', False)
+
+
+        if vonDatum is not None:
+
+            info = db.get_selected_information('datepart(wk, ' + "'" + vonDatum + "'" + ') AS Kalenderwoche')
+
+
         return info

@@ -11,19 +11,21 @@ class StundenzettelController(Controller):
     def get_stundenzettel_form(self):
 
         information = ' '
+
         db = DatabaseController()
         st = Stundenzettel()
+        kalenderwoche = db.get_selected_information('datepart(wk, GETDATE()) AS Kalenderwoche')
+
 
         if request.method == 'POST':
 
+
             information = st.validate_stundenzettel_date()
+            kalenderwoche = st.get_kalenderwoche_stundenzettel()
 
+            cursor = db.get_many_information('Stundenzettel', 'BearbeiterID = ' + str(session['Personalnummer']) + information)
 
-            if information is not None:
-                return redirect(url_for(session['defaultRoute']))
-                response = True
-
-        cursor = db.get_many_information('Stundenzettel', 'BearbeiterID = ' + str(session['Personalnummer']) + ' ' + information)
+        cursor = db.get_selected_information('*', 'Stundenzettel', 'Datepart(wk,Datum) = DATEPART(wk, (Select MAX(Datum) As Datum From Stundenzettel Where Freigabe is Null or Freigabe = 0 And BearbeiterID = ' + str(session['Personalnummer']) + ' ))')
         persocursor = db.get_many_information('Mitarbeiter', 'Personalnummer = ' + str(session['Personalnummer']))
         montag = st.wochentag_summe(1)
         dienstag = st.wochentag_summe(2)
@@ -33,8 +35,5 @@ class StundenzettelController(Controller):
         samstag = st.wochentag_summe(6)
         sonntag = st.wochentag_summe(7)
         weekday = [montag, dienstag, mittwoch, donnerstag, freitag, samstag, sonntag]
-
-
-
         x = 0
-        return render_template('stundenzettel/stundenzettel.html', daten=cursor , x=x, success=request.args.get('success'), day= weekday, personal=persocursor)
+        return render_template('stundenzettel/stundenzettel.html', daten=cursor , x=x, success=request.args.get('success'), day= weekday, personal=persocursor, kw=kalenderwoche)
