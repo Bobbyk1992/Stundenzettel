@@ -7,7 +7,7 @@ from src.controller.Controller import Controller
 
 class DatabaseController(Controller):
 
-    def __init__(self, server='Desktop-3BRBS77\Sqlexpress', user=r'sa', password='Achilles', db='Stundenzettel'):
+    def __init__(self, server='localhost\Sqlexpress', user=r'sa', password='Achilles', db='Stundenzettel'):
 
         self.dbserver = server
         self.dbuser = user

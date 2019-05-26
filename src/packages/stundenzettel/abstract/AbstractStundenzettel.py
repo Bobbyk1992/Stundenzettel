@@ -12,3 +12,12 @@ class AbstractStundenzettel(AbstractObject):
 
     def validate_stundenzettel_date(self):
         pass
+
+    def get_kalenderwoche_stundenzettel(self):
+        pass
+
+    def get_vonDatum_Woche(self):
+        pass
+
+    def get_bisDatum_Woche(self):
+        pass
