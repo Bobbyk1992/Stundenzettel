@@ -21,3 +21,9 @@ class AbstractStundenzettel(AbstractObject):
 
     def get_bisDatum_Woche(self):
         pass
+
+    def save_leistung(self):
+        pass
+
+    def get_edit_day(self):
+        pass

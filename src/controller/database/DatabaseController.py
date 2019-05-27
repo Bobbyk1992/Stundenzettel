@@ -53,6 +53,15 @@ class DatabaseController(Controller):
 
         self.cursor.execute('Insert Into ' + table + ' (' + col + ' ) Values (' + val + ' )')
 
+    def column_string(self, col):
+
+        if col is not None:
+            wrap_col_str = "'" + col + "'"
+        else:
+            wrap_col_str = None
+
+        return wrap_col_str
+
 """client = pymssql.connect(host='Desktop-3BRBS77\Sqlexpress', user=r'sa', password='Achilles',
                                       database='Stundenzettel')
 

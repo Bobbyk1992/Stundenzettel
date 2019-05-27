@@ -14,7 +14,9 @@ class StundenzettelController(Controller):
 
         db = DatabaseController()
         st = Stundenzettel()
-        kalenderwoche = db.get_selected_information('datepart(wk, GETDATE()) AS Kalenderwoche')
+        vonDatum = st.get_vonDatum_Woche()
+        bisDatum = st.get_bisDatum_Woche()
+        kalenderwoche = st.get_kalenderwoche_stundenzettel(vonDatum)
 
 
         if request.method == 'POST':
@@ -48,12 +50,11 @@ class StundenzettelController(Controller):
                #                                                                                                                    'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
                 #                                                                                                                   + str(session['Personalnummer']) + ' ))')
 
-        vonDatum = st.get_vonDatum_Woche()
-        bisDatum = st.get_bisDatum_Woche()
+
         cursor = db.get_selected_information('*', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(session['Personalnummer']) + ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" + ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
         titel = db.get_selected_information('*', 'Titel')
         untertitel = db.get_selected_information('*', 'Untertitel')
-
+        edit_day = st.get_edit_day()
         persocursor = db.get_many_information('Mitarbeiter', 'Personalnummer = ' + str(session['Personalnummer']))
         montag = st.wochentag_summe(2)
         dienstag = st.wochentag_summe(3)
@@ -64,4 +65,15 @@ class StundenzettelController(Controller):
         sonntag = st.wochentag_summe(1)
         weekday = [montag, dienstag, mittwoch, donnerstag, freitag, samstag, sonntag]
         x = 0
-        return render_template('stundenzettel/stundenzettel.html', daten=cursor , x=x, success=request.args.get('success'), day= weekday, personal=persocursor, kw=kalenderwoche, vonDatum=vonDatum, bisDatum=bisDatum, titel=titel, untertitel=untertitel)
+        return render_template('stundenzettel/stundenzettel.html',
+                               daten=cursor,
+                               x=x,
+                               success=request.args.get('success'),
+                               day= weekday,
+                               personal=persocursor,
+                               kw=kalenderwoche,
+                               vonDatum=vonDatum,
+                               bisDatum=bisDatum,
+                               titel=titel,
+                               untertitel=untertitel,
+                               editDay=edit_day)

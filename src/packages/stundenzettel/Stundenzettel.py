@@ -11,96 +11,55 @@ class Stundenzettel(AbstractStundenzettel):
     def wochentag_summe(self, wochentag):
 
         db = DatabaseController()
+        vonDatum = self.get_vonDatum_Woche()
+        bisDatum = self.get_bisDatum_Woche()
 
         if wochentag == 1:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 1 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))' +
-                                                                                           'And DATEPART(YYYY, Datum) = ' 
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                        'From Stundenzettel '
-                                                                                                        'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))' )
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
 
         elif wochentag == 2:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 2 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))' 
-                                                                                           'And DATEPART(YYYY, Datum) = '
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))' )
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
         elif wochentag == 3:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 3 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))'
-                                                                                           'And DATEPART(YYYY, Datum) = '
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))')
-
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
         elif wochentag == 4:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 4 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))'
-                                                                                           'And DATEPART(YYYY, Datum) = '
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))')
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
 
         elif wochentag == 5:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 5 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))'
-                                                                                           'And DATEPART(YYYY, Datum) = '
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))')
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
 
         elif wochentag == 6:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 6 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))'
-                                                                                           'And DATEPART(YYYY, Datum) = '
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))')
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
 
         elif wochentag == 7:
             return db.get_selected_information('SUM(Stunden) As SummeStd','Stundenzettel', 'DATEPART(dw,Datum) = 7 And ' +
-                                                                                           'Datepart(wk,Datum) = '
-                                                                                           'DATEPART(wk, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))'
-                                                                                           'And DATEPART(YYYY, Datum) = '
-                                                                                           'DATEPART(YYYY, (Select MAX(Datum) As Datum '
-                                                                                                         'From Stundenzettel '
-                                                                                                         'Where Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                                                         + str(session['Personalnummer']) + ' ))')
+                                                                                            '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                                                            + str(session['Personalnummer']) +
+                                                                                            ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" +
+                                                                                            ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
 
         else:
             print('Es gibt nur 7 Wochentage z.B. 1 = Montag ...')
@@ -125,16 +84,16 @@ class Stundenzettel(AbstractStundenzettel):
         info = str(info)
         return info
 
-    def get_kalenderwoche_stundenzettel(self):
+    def get_kalenderwoche_stundenzettel(self, datum):
 
         db = DatabaseController()
         info = ' '
-        vonDatum = request.form.get('vonDatum', False)
+        #vonDatum = request.form.get(datum, False)
 
 
-        if vonDatum is not None:
+        #if vonDatum is not None:
 
-            info = db.get_selected_information('datepart(wk, ' + "'" + vonDatum + "'" + ') AS Kalenderwoche')
+        info = db.get_selected_information('datepart(wk, Convert(datetime, ' + "'" + datum + "'" + ' ,104)) AS Kalenderwoche')
 
 
         return info
@@ -152,7 +111,7 @@ class Stundenzettel(AbstractStundenzettel):
                                                                            + str(session['Personalnummer']) )
 
         if val[0]["vonDatum"] == 1:
-            diff = str(7)
+            diff = str(-6)
         elif val[0]["vonDatum"] == 2:
             diff = str(0)
         elif val[0]["vonDatum"] == 3:
@@ -218,30 +177,57 @@ class Stundenzettel(AbstractStundenzettel):
             datum = request.form.get('LeistDatum', False)
             datum = datetime.strptime(datum, "%Y-%m-%d").strftime("%d.%m.%Y")
             #datum = datum + ' 00:00:00.000'
-            objektnr = request.form.get('LeistObjektnummer', '')
-            objektname = request.form.get('LeistObjektname', '')
-            objektstrasse = request.form.get('LeistObjektstrasse', '')
-            objektplz = request.form.get('LeistPLZ', '')
-            objektort = request.form.get('LeistOrt', '')
-            titel = request.form.get('LeistTitel_Nr', '')
-            untertitel = request.form.get('LeistUntertitel_Nr', ' ')
-            leistung = request.form.get('LeistLeistung', '')
-            stunden = request.form.get('LeistStunden', '')
-            bemerkung = request.form.get('LeistBemerkung', '')
+            objektnr = request.form.get('LeistObjektnummer', None)
+
+            objektname = request.form.get('LeistObjektname', None)
+            objektname = db.column_string(objektname)
+
+            objektstrasse = request.form.get('LeistObjektstrasse', None)
+            objektstrasse = db.column_string(objektstrasse)
+
+            objektplz = request.form.get('LeistPLZ', None)
+            objektplz = db.column_string(objektplz)
+
+            objektort = request.form.get('LeistOrt', None)
+            objektort = db.column_string(objektort)
+
+            titel = request.form.get('LeistTitel_Nr', None)
+            untertitel = request.form.get('LeistUntertitel_Nr', None)
+
+            leistung = request.form.get('LeistLeistung', None)
+            leistung = db.column_string(leistung)
+
+            stunden = request.form.get('LeistStunden', None)
+
+            bemerkung = request.form.get('LeistBemerkung', None)
+            bemerkung = db.column_string(bemerkung)
 
             result = db.insert_information('Stundenzettel',
                                   'BearbeiterID, Datum, Objektnr, Objektname, Objektstrasse, ObjektPLZ, ObjektOrt, Titel_Nr, Untertitel_Nr, Leistung, Stunden, Bemerkung',
-                                    personalnummer + ','
-                                    + "Convert(datetime, '" + datum + "', 104 )" + ','
-                                    + objektnr + ','
-                                    + "'" + objektname + "'" + ','
-                                    + "'" + objektstrasse + "'" + ','
-                                    + "'" + objektplz + "'" + ','
-                                    + "'" + objektort + "'" + ','
-                                    + titel + ','
-                                    + untertitel + ','
-                                    + "'" + leistung + "'" + ','
-                                    + stunden + ','
-                                    + "'" + bemerkung + "'")
+                                    personalnummer + ', '
+                                    + "Convert(datetime, '" + datum + "', 104 )" + ', '
+                                    + objektnr + ', '
+                                    +  objektname + ', '
+                                    +  objektstrasse  + ', '
+                                    + objektplz  + ', '
+                                    + objektort  + ', '
+                                    + titel + ', '
+                                    + untertitel + ', '
+                                    + leistung + ', '
+                                    + stunden + ', '
+                                    +  bemerkung )
 
             return result
+
+
+    def get_edit_day(self):
+
+        db = DatabaseController()
+
+        edit_day = db.get_selected_information('Max(Datum) As Datum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
+                                                                                       + str(session['Personalnummer']))
+
+        edit_day = str(edit_day[0]["Datum"])
+        edit_day = datetime.strptime(edit_day, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+
+        return edit_day

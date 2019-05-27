@@ -55,7 +55,7 @@
   <div class="mx-auto" style="width: 1000px">
     <div class="card text-white border-secondary bg-primary">
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -126,7 +126,7 @@
               <div class="form-group row">
                 <label for="col10" class="col-sm-2 col-form-label col-form-label-sm">Datum:</label>
                   <div class="col-sm-3">
-                    <input type="date" name="LeistDatum" class="form-control form-control-sm" id="col10" placeholder="z.B. 0003">
+                    <input type="date" name="LeistDatum" class="form-control form-control-sm" id="col10" value="{{ editDay }}"  placeholder="z.B. 0003" required>
                   </div>
                   <label for="inlineFormCustomSelect3" class="col-sm-2 col-form-label col-form-label-sm">Kennzeichen:</label>
                   <div class="col-sm-3">
@@ -141,7 +141,7 @@
               <div class="form-group row">
                 <label for="col12" class="col-sm-2 col-form-label col-form-label-sm">Objektnummer</label>
                   <div class="col-sm-2">
-                    <input type="text" name="LeistObjektnummer" class="form-control form-control-sm" id="col12" placeholder="z.B. 0003">
+                    <input type="text" name="LeistObjektnummer" class="form-control form-control-sm" id="col12" placeholder="z.B. 0003" required>
                   </div>
                   <div class="col-sm-2">
                     <button type="button" class="btn btn-primary btn-sm">Objektsuche</button>
@@ -150,28 +150,28 @@
               <div class="form-group row">
                   <label for="col4" class="col-sm-2 col-form-label col-form-label-sm">Objektname</label>
                 <div class="col-sm-10">
-                    <input type="text" name="LeistObjektname" class="form-control form-control-sm" id="col4" placeholder="z.B. Objekt">
+                    <input type="text" name="LeistObjektname" class="form-control form-control-sm" id="col4" placeholder="z.B. Objekt" required>
                 </div>
               </div>
                <div class="form-group row">
                   <label for="col5" class="col-sm-2 col-form-label col-form-label-sm">Objektstrasse</label>
                 <div class="col-sm-10">
-                    <input type="text" name="LeistObjektstrasse" class="form-control form-control-sm" id="col5" placeholder="z.B. Objektstrasse">
+                    <input type="text" name="LeistObjektstrasse" class="form-control form-control-sm" id="col5" placeholder="z.B. Objektstrasse" required>
                 </div>
               </div>
               <div class="form-group row">
                   <label for="col6" class="col-sm-2 col-form-label col-form-label-sm">PLZ/Ort:</label>
                 <div class="col-sm-3">
-                    <input type="text" name="LeistPLZ" class="form-control form-control-sm" id="col6" placeholder="z.B. PLZ">
+                    <input type="text" name="LeistPLZ" class="form-control form-control-sm" id="col6" placeholder="z.B. PLZ" required>
                 </div>
                 <div class="col-sm-7">
-                    <input type="text" name="LeistOrt" class="form-control form-control-sm" id="col7" placeholder="z.B. Ort">
+                    <input type="text" name="LeistOrt" class="form-control form-control-sm" id="col7" placeholder="z.B. Ort" required>
                 </div>
               </div>
               <div class="form-group row align-items-center">
                   <label for="inlineFormCustomSelect" class="col-sm-2 col-form-label col-form-label-sm">Titel/Untertitel-Nr:</label>
                   <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" name="LeistTitel_Nr" id="inlineFormCustomSelect">
+                    <select class="custom-select custom-select-sm" name="LeistTitel_Nr" id="inlineFormCustomSelect" required>
                       <option selected>Titel</option>
                       {% for t in titel %}
                       <option value="{{ t.ID }}">{{ t.NR }}</option>
@@ -179,7 +179,7 @@
                     </select>
                   </div>
                   <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" name="LeistUntertitel_Nr" id="inlineFormCustomSelect2">
+                    <select class="custom-select custom-select-sm" name="LeistUntertitel_Nr" id="inlineFormCustomSelect2" required>
                       <option selected>Untertitel-Nr</option>
                       {% for ut in untertitel %}
                       <option value="{{ ut.ID }}">{{ ut.NR }}</option>
@@ -190,19 +190,19 @@
               <div class="form-group row">
                 <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label col-form-label-sm">Leistung:</label>
                 <div class="col-sm-10">
-                <textarea class="form-control" name="LeistLeistung" id="exampleFormControlTextarea1" rows="2"></textarea>
+                <textarea class="form-control" name="LeistLeistung" id="exampleFormControlTextarea1" rows="2" required></textarea>
                 </div>
               </div>
                 <div class="form-group row">
                 <label for="col8" class="col-sm-2 col-form-label col-form-label-sm">Stunden:</label>
                   <div class="col-sm-3">
-                    <input type="text" name="LeistStunden" class="form-control form-control-sm" id="col8" placeholder="z.B. Stundenanzahl">
+                    <input type="text" name="LeistStunden" class="form-control form-control-sm" id="col8" placeholder="z.B. Stundenanzahl" required>
                   </div>
                 </div>
               <div class="form-group row">
                 <label for="exampleFormControlTextarea12" class="col-sm-2 col-form-label col-form-label-sm">Bemerkung:</label>
                 <div class="col-sm-10">
-                <textarea class="form-control" name="LeistBemerkung" id="exampleFormControlTextarea12" rows="2"></textarea>
+                <textarea class="form-control" name="LeistBemerkung" id="exampleFormControlTextarea12" rows="2" required></textarea>
                 </div>
               </div>
               <button type="submit" name="save" class="btn btn-primary">Speichern</button>
