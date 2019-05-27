@@ -51,7 +51,7 @@ class DatabaseController(Controller):
 
     def insert_information(self, table, col, val):
 
-        self.cursor.execute('Insert Into ' & table & ' (' & col & ' ) Values (' & val & ' )')
+        self.cursor.execute('Insert Into ' + table + ' (' + col + ' ) Values (' + val + ' )')
 
 """client = pymssql.connect(host='Desktop-3BRBS77\Sqlexpress', user=r'sa', password='Achilles',
                                       database='Stundenzettel')
