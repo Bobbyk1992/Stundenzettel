@@ -21,8 +21,24 @@ class StundenzettelController(Controller):
 
         if request.method == 'POST':
 
+            button = request.form.copy().popitem()[0]
 
-            leistung = st.save_leistung()
+            if button[0:4] == "save":
+
+                leistung = st.save_leistung()
+
+            if button[0:5] == "Rsave":
+
+                reisekosten = st.save_reisekosten()
+
+            if button[0:5] == "Ssave":
+
+                sonstiges = st.save_sonstiges()
+
+            if button[0:8] == "freigabe":
+
+                freigabe = st.freigabe_stundenzettel()
+
             #information = st.validate_stundenzettel_date()
             #kalenderwoche = st.get_kalenderwoche_stundenzettel()
 
@@ -51,10 +67,12 @@ class StundenzettelController(Controller):
                 #                                                                                                                   + str(session['Personalnummer']) + ' ))')
 
 
-        cursor = db.get_selected_information('*', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(session['Personalnummer']) + ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" + ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
+        cursor = db.get_selected_information('*, Convert(varchar, Datum, 104) As CDatum', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(session['Personalnummer']) + ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" + ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'")
         titel = db.get_selected_information('*', 'Titel')
         untertitel = db.get_selected_information('*', 'Untertitel')
         edit_day = st.get_edit_day()
+        reiseart = db.get_selected_information('*', 'Reise_Art')
+        objekt = db.get_selected_information('*', 'Objekt')
         persocursor = db.get_many_information('Mitarbeiter', 'Personalnummer = ' + str(session['Personalnummer']))
         montag = st.wochentag_summe(2)
         dienstag = st.wochentag_summe(3)
@@ -76,4 +94,6 @@ class StundenzettelController(Controller):
                                bisDatum=bisDatum,
                                titel=titel,
                                untertitel=untertitel,
-                               editDay=edit_day)
+                               editDay=edit_day,
+                               reiseart=reiseart,
+                               objekt=objekt)

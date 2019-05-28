@@ -102,12 +102,21 @@ class Stundenzettel(AbstractStundenzettel):
 
         db = DatabaseController()
 
+        data = db.get_selected_information('*', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(session['Personalnummer']))
+
+
         #datum = db.get_selected_information('Convert(varchar, MAX(Datum) , 104) As Datum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
          #                                                                  + str(session['Personalnummer']) )
         #datum = str(datum[0]["Datum"])
         #datum = datetime.strptime(datum, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S.%f")
 
-        val = db.get_selected_information('DATEPART(dw, MAX(Datum) ) As vonDatum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
+        if len(data) == 0:
+            val = db.get_selected_information('DATEPART(dw, MAX(Datum) ) As vonDatum', 'Stundenzettel',
+                                              'Freigabe = -1 And BearbeiterID = '
+                                              + str(session['Personalnummer']))
+
+        else:
+            val = db.get_selected_information('DATEPART(dw, MAX(Datum) ) As vonDatum', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
                                                                            + str(session['Personalnummer']) )
 
         if val[0]["vonDatum"] == 1:
@@ -125,8 +134,18 @@ class Stundenzettel(AbstractStundenzettel):
         elif val[0]["vonDatum"] == 7:
             diff = str(-5)
 
-        vonDatum = db.get_selected_information('Dateadd(dd, ' + diff + ' , MAX(Datum)) As vonDatum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
+        if len(data) == 0:
+            diff = int(diff) +7
+            diff = str(diff)
+            vonDatum = db.get_selected_information('Dateadd(dd, ' + diff + ' , MAX(Datum)) As vonDatum',
+                                                   'Stundenzettel',
+                                                   'Freigabe = -1 And BearbeiterID = '
+                                                   + str(session['Personalnummer']))
+
+        else:
+            vonDatum = db.get_selected_information('Dateadd(dd, ' + diff + ' , MAX(Datum)) As vonDatum', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
                                                                            + str(session['Personalnummer']) )
+
         vonDatum = str(vonDatum[0]["vonDatum"])
         vonDatum = datetime.strptime(vonDatum, "%Y-%m-%d %H:%M:%S").strftime("%d.%m.%Y")
 
@@ -136,11 +155,20 @@ class Stundenzettel(AbstractStundenzettel):
 
         db = DatabaseController()
 
+        data = db.get_selected_information('*', 'Stundenzettel' , '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(session['Personalnummer']))
+
         #datum = db.get_selected_information('MAX(Datum) as Datum ', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
         #                                                                   + str(session['Personalnummer']))
         #datum = str(datum[0]["Datum"])
         #datum = datetime.strptime(datum, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d %H:%M:%S.%f")
-        val = db.get_selected_information('DATEPART(dw, MAX(Datum) ) As bisDatum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
+
+        if len(data) == 0:
+            val = db.get_selected_information('DATEPART(dw, MAX(Datum) ) As bisDatum', 'Stundenzettel',
+                                              'Freigabe = -1 And BearbeiterID = '
+                                              + str(session['Personalnummer']))
+
+        else:
+            val = db.get_selected_information('DATEPART(dw, MAX(Datum) ) As bisDatum', 'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
                                                                                                     + str(session['Personalnummer']))
         if val[0]["bisDatum"] == 1:
             diff = str(0)
@@ -157,8 +185,19 @@ class Stundenzettel(AbstractStundenzettel):
         elif val[0]["bisDatum"] == 7:
             diff = str(1)
 
-        bisDatum = db.get_selected_information('Dateadd(dd, ' + diff + ' , MAX(Datum)) As bisDatum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
-                                                                           + str(session['Personalnummer']) )
+        if len(data) == 0:
+            diff = int(diff) +7
+            diff = str(diff)
+            bisDatum = db.get_selected_information('Dateadd(dd, ' + diff + ' , MAX(Datum)) As bisDatum',
+                                                   'Stundenzettel',
+                                                   'Freigabe = -1 And BearbeiterID = '
+                                                   + str(session['Personalnummer']))
+
+        else:
+            bisDatum = db.get_selected_information('Dateadd(dd, ' + diff + ' , MAX(Datum)) As bisDatum',
+                                                   'Stundenzettel', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = '
+                                                   + str(session['Personalnummer']) )
+
         bisDatum = str(bisDatum[0]["bisDatum"])
         bisDatum = datetime.strptime(bisDatum, "%Y-%m-%d %H:%M:%S").strftime("%d.%m.%Y")
 
@@ -168,41 +207,37 @@ class Stundenzettel(AbstractStundenzettel):
 
         db = DatabaseController()
 
-        button = request.form.copy().popitem()[0]
+        personalnummer = str(session['Personalnummer'])
 
-        if button[0:4] == "save":
+        datum = request.form.get('LeistDatum', False)
+        datum = datetime.strptime(datum, "%Y-%m-%d").strftime("%d.%m.%Y")
+        #datum = datum + ' 00:00:00.000'
+        objektnr = request.form.get('LeistObjektnummer', None)
 
-            personalnummer = str(session['Personalnummer'])
+        objektname = request.form.get('LeistObjektname', None)
+        objektname = db.column_string(objektname)
 
-            datum = request.form.get('LeistDatum', False)
-            datum = datetime.strptime(datum, "%Y-%m-%d").strftime("%d.%m.%Y")
-            #datum = datum + ' 00:00:00.000'
-            objektnr = request.form.get('LeistObjektnummer', None)
+        objektstrasse = request.form.get('LeistObjektstrasse', None)
+        objektstrasse = db.column_string(objektstrasse)
 
-            objektname = request.form.get('LeistObjektname', None)
-            objektname = db.column_string(objektname)
+        objektplz = request.form.get('LeistPLZ', None)
+        objektplz = db.column_string(objektplz)
 
-            objektstrasse = request.form.get('LeistObjektstrasse', None)
-            objektstrasse = db.column_string(objektstrasse)
+        objektort = request.form.get('LeistOrt', None)
+        objektort = db.column_string(objektort)
 
-            objektplz = request.form.get('LeistPLZ', None)
-            objektplz = db.column_string(objektplz)
+        titel = request.form.get('LeistTitel_Nr', None)
+        untertitel = request.form.get('LeistUntertitel_Nr', None)
 
-            objektort = request.form.get('LeistOrt', None)
-            objektort = db.column_string(objektort)
+        leistung = request.form.get('LeistLeistung', None)
+        leistung = db.column_string(leistung)
 
-            titel = request.form.get('LeistTitel_Nr', None)
-            untertitel = request.form.get('LeistUntertitel_Nr', None)
+        stunden = request.form.get('LeistStunden', None)
 
-            leistung = request.form.get('LeistLeistung', None)
-            leistung = db.column_string(leistung)
+        bemerkung = request.form.get('LeistBemerkung', None)
+        bemerkung = db.column_string(bemerkung)
 
-            stunden = request.form.get('LeistStunden', None)
-
-            bemerkung = request.form.get('LeistBemerkung', None)
-            bemerkung = db.column_string(bemerkung)
-
-            result = db.insert_information('Stundenzettel',
+        result = db.insert_information('Stundenzettel',
                                   'BearbeiterID, Datum, Objektnr, Objektname, Objektstrasse, ObjektPLZ, ObjektOrt, Titel_Nr, Untertitel_Nr, Leistung, Stunden, Bemerkung',
                                     personalnummer + ', '
                                     + "Convert(datetime, '" + datum + "', 104 )" + ', '
@@ -217,17 +252,178 @@ class Stundenzettel(AbstractStundenzettel):
                                     + stunden + ', '
                                     +  bemerkung )
 
-            return result
+        return result
+
+    def save_reisekosten(self):
+
+        db = DatabaseController()
+
+        personalnummer = str(session['Personalnummer'])
+
+        datum = request.form.get('ReisekostenDatum', False)
+        datum = datetime.strptime(datum, "%Y-%m-%d").strftime("%d.%m.%Y")
+        # datum = datum + ' 00:00:00.000'
+        objektnr = request.form.get('ReisekostenObjektnummer', None)
+
+        objektname = request.form.get('ReisekostenObjektname', None)
+        objektname = db.column_string(objektname)
+
+        objektstrasse = request.form.get('ReisekostenObjektstrasse', None)
+        objektstrasse = db.column_string(objektstrasse)
+
+        objektplz = request.form.get('ReisekostenPLZ', None)
+        objektplz = db.column_string(objektplz)
+
+        objektort = request.form.get('ReisekostenOrt', None)
+        objektort = db.column_string(objektort)
+
+        reiseart = request.form.get('ReisekostenTitel', None)
+
+        titel = request.form.get('ReisekostenTitel', None)
+        untertitel = request.form.get('ReisekostenUntertitel', None)
+
+        ziel = request.form.get('ReisekostenZiel', None)
+        ziel = db.column_string(ziel)
+
+        privat = request.form.get('ReisekostenPrivat', None)
+        privat = db.column_string(privat)
+
+        zweck = request.form.get('ReisekostenZweck', None)
+        zweck = db.column_string(zweck)
+
+        bemerkung = request.form.get('ReisekostenBemerkung', None)
+        bemerkung = db.column_string(bemerkung)
+
+        stunden = '0'
+        stunden = db.column_string(stunden)
+
+        leistung = '-'
+        leistung = db.column_string(leistung)
+
+        result = db.insert_information('Stundenzettel',
+                                       'BearbeiterID, Datum, Objektnr, Objektname, Objektstrasse, ObjektPLZ, ObjektOrt, Reise_Art ,Titel_Nr, Untertitel_Nr, Ziel, PG, Zweck, Bemerkung, Stunden, Leistung',
+                                       personalnummer + ', '
+                                       + "Convert(datetime, '" + datum + "', 104 )" + ', '
+                                       + objektnr + ', '
+                                       + objektname + ', '
+                                       + objektstrasse + ', '
+                                       + objektplz + ', '
+                                       + objektort + ', '
+                                       + reiseart + ', '
+                                       + titel + ', '
+                                       + untertitel + ', '
+                                       + ziel + ', '
+                                       + privat + ', '
+                                       + zweck + ', '
+                                       + bemerkung + ', '
+                                       + stunden + ', '
+                                       + leistung)
+
+        return result
+
+
+    def save_sonstiges(self):
+
+        db = DatabaseController()
+
+        personalnummer = str(session['Personalnummer'])
+
+        datum = request.form.get('SonstigesDatum', False)
+        datum = datetime.strptime(datum, "%Y-%m-%d").strftime("%d.%m.%Y")
+
+        leistung = request.form.get('SonstigeLeistung', None)
+        leistung = db.column_string(leistung)
+
+        urlaub =  request.form.get('SonstigeUrlaub', 0)
+        krankheit = request.form.get('SonstigeKrankheit', 0)
+        freizeit = request.form.get('SonstigeFreizeit', 0)
+
+        if leistung == 'Urlaub':
+            urlaub = -1
+            krankheit = 0
+            freizeit = 0
+
+        if leistung == 'Krank' or leistung == 'Arztbesuche':
+            krankheit = -1
+            urlaub = 0
+            freizeit = 0
+
+        if leistung == 'Freizeitausgleich v. Überstunden':
+            freizeit = -1
+            krankheit = 0
+            urlaub = 0
+
+        urlaub = str(urlaub)
+        krankheit = str(krankheit)
+        freizeit = str(freizeit)
+
+        bemerkung = request.form.get('SonstigeBemerkung', None)
+        bemerkung = db.column_string(bemerkung)
+
+        stunden = request.form.get('SonstigeStunden', None)
+
+        beschreibung = request.form.get('SonstigeBeschreibung', None)
+        beschreibung = db.column_string(beschreibung)
+
+        untertitel = '-'
+        untertitel = db.column_string(untertitel)
+
+        titel = '-'
+        titel = db.column_string(titel)
+
+        objektnr = '0'
+        objektnr = db.column_string(objektnr)
+        objektname = '-'
+        objektname = db.column_string(objektname)
+
+        result = db.insert_information('Stundenzettel',
+                                       'BearbeiterID, Datum, Leistung, Urlaub, Krankheit, Freizeitausgleich, Bemerkung, Stunden, Zusatzinfo, Untertitel_Nr, Titel_Nr, Objektnr, Objektname',
+                                       personalnummer + ', '
+                                       + "Convert(datetime, '" + datum + "', 104 )" + ', '
+                                       + leistung + ', '
+                                       + urlaub + ', '
+                                       + krankheit + ', '
+                                       + freizeit + ', '
+                                       + bemerkung + ', '
+                                       + stunden + ', '
+                                       + beschreibung + ', '
+                                       + untertitel + ', '
+                                       + titel + ', '
+                                       + objektnr + ', '
+                                       + objektname)
+
+        return result
+
 
 
     def get_edit_day(self):
 
         db = DatabaseController()
 
-        edit_day = db.get_selected_information('Max(Datum) As Datum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
+        data = db.get_selected_information('*', 'Stundenzettel',
+                                           '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(
+                                               session['Personalnummer']))
+
+        if len(data) == 0:
+            edit_day = self.get_vonDatum_Woche()
+            edit_day = datetime.strptime(edit_day, "%d.%m.%Y").strftime("%Y-%m-%d")
+
+
+        else:
+            edit_day = db.get_selected_information('Max(Datum) As Datum', 'Stundenzettel', 'Freigabe is Null or Freigabe = 0 And BearbeiterID = '
                                                                                        + str(session['Personalnummer']))
 
-        edit_day = str(edit_day[0]["Datum"])
-        edit_day = datetime.strptime(edit_day, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+            edit_day = str(edit_day[0]["Datum"])
+            edit_day = datetime.strptime(edit_day, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
 
         return edit_day
+
+    def freigabe_stundenzettel(self):
+
+        db = DatabaseController()
+
+        vonDatum = self.get_vonDatum_Woche()
+        bisDatum = self.get_bisDatum_Woche()
+
+        freigabe = db.update_information('Stundenzettel', 'Freigabe= -1', '(Freigabe is Null or Freigabe = 0) And BearbeiterID = ' + str(session['Personalnummer']) + ' and Convert(varchar, Datum, 104) >= ' + "'" + vonDatum + "'" + ' And Convert(varchar, Datum, 104) <= ' + "'" + bisDatum + "'" )
+

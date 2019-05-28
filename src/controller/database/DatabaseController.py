@@ -53,6 +53,13 @@ class DatabaseController(Controller):
 
         self.cursor.execute('Insert Into ' + table + ' (' + col + ' ) Values (' + val + ' )')
 
+    def update_information(self, table, set, where=None):
+
+        if where is not None:
+            self.cursor.execute('Update ' + table + ' Set ' + set + ' where ' + where)
+        else:
+            self.cursor.execute('Update ' + table + ' Set ' + set)
+
     def column_string(self, col):
 
         if col is not None:

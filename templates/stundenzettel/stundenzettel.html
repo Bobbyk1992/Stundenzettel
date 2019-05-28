@@ -2,11 +2,9 @@
 
 {% block content %}
 
-<form action="/stundenzettel" method="post">
   <div class="row mb-4">
     <div class="col-12 offset-xl-2 col-xl-8 text-center">
       <h1 class="h1">Zeiterfassung</h1>
-      <h2 class="h2">Stundenzettel</h2>
     </div>
     <div class="mx-auto" style="width: 1000px">
       <div class="float-right">
@@ -26,15 +24,17 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon3">Von:</span>
             </div>
-              <input type="text" name="vonDatum" class="form-control" id="vonDatum" aria-describedby="basic-addon3" placeholder="tt.mm.jjjj" value="{{ vonDatum }}">
-            </div>
+            <input type="text" name="vonDatum" class="form-control" id="vonDatum" aria-describedby="basic-addon3"
+                   placeholder="tt.mm.jjjj" value="{{ vonDatum }}">
+          </div>
         </div>
         <div class="col-3">
           <div class="input-group mb-3 w-90">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon2">Bis:</span>
             </div>
-            <input type="text" name="bisDatum" class="form-control" id="bisDatum" aria-describedby="basic-addon2" placeholder="tt.mm.jjjj" value="{{ bisDatum }}">
+            <input type="text" name="bisDatum" class="form-control" id="bisDatum" aria-describedby="basic-addon2"
+                   placeholder="tt.mm.jjjj" value="{{ bisDatum }}">
           </div>
         </div>
         <div class="col-2">
@@ -42,11 +42,14 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">KW:</span>
             </div>
-            <input type="text" class="form-control" id="KW" aria-describedby="basic-addon3" value="{{ kw[0]["Kalenderwoche"] }}">
+            <input type="text" class="form-control" id="KW" aria-describedby="basic-addon3"
+                   value="{{ kw[0]["Kalenderwoche"] }}">
           </div>
         </div>
         <div class="col-4">
-          <div class="p-3 mb-2 bg-primary text-white">Personalnummer: {{ personal[0]["Personalnummer"] }} User: {{ personal[0]["Name"] }}</div>
+          <div class="p-3 mb-2 bg-primary text-white">Personalnummer: {{ personal[0]["Personalnummer"] }} User: {{
+            personal[0]["Name"] }}
+          </div>
         </div>
       </div>
     </div>
@@ -54,33 +57,33 @@
 
   <div class="mx-auto" style="width: 1000px">
     <div class="card text-white border-secondary bg-primary">
-      <div class="table-responsive">
+      <div class="table-responsive" style="height: 250px; display: block; overflow-y: auto;">
         <table class="table table-hover table-striped">
           <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Datum</th>
-              <th scope="col">Bestellnummer</th>
-              <th scope="col">Dauer</th>
-              <th scope="col">Nr</th>
-              <th scope="col">Leistung</th>
-              <th scope="col">Objektnr</th>
-              <th scope="col">Objektname</th>
-            </tr>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Datum</th>
+            <th scope="col">Bestellnummer</th>
+            <th scope="col">Dauer</th>
+            <th scope="col">Nr</th>
+            <th scope="col">Leistung</th>
+            <th scope="col">Objektnr</th>
+            <th scope="col">Objektname</th>
+          </tr>
           </thead>
           <tbody>
-            {% for row in daten %}
-            <tr>
-              <th scope="row">{{ loop.index }}</th>
-              <td>{{ row.Datum }}</td>
-              <td>Bestellnummer</td>
-              <td>{{ row.Stunden }} Std.</td>
-              <td>{{ row.Titel_Nr }}.{{ row.Untertitel_Nr}}</td>
-              <td>{{ row.Leistung }}</td>
-              <td>{{ row.Objektnr }}</td>
-              <td>{{ row.Objektname }}</td>
-            </tr>
-            {% endfor %}
+          {% for row in daten %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ row.CDatum }}</td>
+            <td>Bestellnummer</td>
+            <td>{{ row.Stunden }} Std.</td>
+            <td>{{ row.Titel_Nr }}.{{ row.Untertitel_Nr}}</td>
+            <td>{{ row.Leistung }}</td>
+            <td>{{ row.Objektnr }}</td>
+            <td>{{ row.Objektname }}</td>
+          </tr>
+          {% endfor %}
           </tbody>
         </table>
       </div>
@@ -91,497 +94,564 @@
           <p class="text-primary">Soll:</p>
           <p class="text-primary">Ist:</p>
         </div>
-          <div class="float-right">
-            <span class="badge badge-primary mx-auto">Montag:</span>
-            <span class="badge badge-light mx-auto">{{ day[0][0]["SummeStd"] }}</span>
-            <span class="badge badge-primary mx-auto">Dienstag:</span>
-            <span class="badge badge-light mx-auto">{{ day[1][0]["SummeStd"] }}</span>
-            <span class="badge badge-primary mx-auto">Mittwoch:</span>
-            <span class="badge badge-light mx-auto">{{ day[2][0]["SummeStd"] }}</span>
-            <span class="badge badge-primary mx-auto">Donnerstag:</span>
-            <span class="badge badge-light mx-auto">{{ day[3][0]["SummeStd"] }}</span>
-            <span class="badge badge-primary mx-auto">Freitag:</span>
-            <span class="badge badge-light mx-auto">{{ day[4][0]["SummeStd"] }}</span>
-            <span class="badge badge-primary mx-auto">Samstag:</span>
-            <span class="badge badge-light mx-auto">{{ day[5][0]["SummeStd"] }}</span>
-            <span class="badge badge-primary mx-auto">Sonntag:</span>
-            <span class="badge badge-light mx-auto">{{ day[6][0]["SummeStd"] }}</span>
-          </div>
+        <div class="float-right">
+          <span class="badge badge-primary mx-auto">Montag:</span>
+          <span class="badge badge-light mx-auto">{{ day[0][0]["SummeStd"] }}</span>
+          <span class="badge badge-primary mx-auto">Dienstag:</span>
+          <span class="badge badge-light mx-auto">{{ day[1][0]["SummeStd"] }}</span>
+          <span class="badge badge-primary mx-auto">Mittwoch:</span>
+          <span class="badge badge-light mx-auto">{{ day[2][0]["SummeStd"] }}</span>
+          <span class="badge badge-primary mx-auto">Donnerstag:</span>
+          <span class="badge badge-light mx-auto">{{ day[3][0]["SummeStd"] }}</span>
+          <span class="badge badge-primary mx-auto">Freitag:</span>
+          <span class="badge badge-light mx-auto">{{ day[4][0]["SummeStd"] }}</span>
+          <span class="badge badge-primary mx-auto">Samstag:</span>
+          <span class="badge badge-light mx-auto">{{ day[5][0]["SummeStd"] }}</span>
+          <span class="badge badge-primary mx-auto">Sonntag:</span>
+          <span class="badge badge-light mx-auto">{{ day[6][0]["SummeStd"] }}</span>
+        </div>
       </div>
- </div>
+    </div>
 
-  <div class="mx-auto pt-3" style="width: 1000px">
-    <button type="submit" class="btn btn-primary">Bearbeiten</button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLeistung">Leistung</button>
-      <div class="modal fade bd-example-modal-lg" id="modalLeistung" tabindex="-1" role="dialog" aria-labelledby="modalLeistungLabel" aria-hidden="true">
+    <div class="mx-auto pt-3" style="width: 1000px">
+      <button type="submit" class="btn btn-primary">Bearbeiten</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalLeistung">Leistung</button>
+      <div class="modal fade bd-example-modal-lg" id="modalLeistung" tabindex="-1" role="dialog"
+           aria-labelledby="modalLeistungLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
+         <form action="/stundenzettel" class="form" method="POST">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="modalLeistungLabel">Stundenzettel Eingabe</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group row">
                 <label for="col10" class="col-sm-2 col-form-label col-form-label-sm">Datum:</label>
-                  <div class="col-sm-3">
-                    <input type="date" name="LeistDatum" class="form-control form-control-sm" id="col10" value="{{ editDay }}"  placeholder="z.B. 0003" required>
-                  </div>
-                  <label for="inlineFormCustomSelect3" class="col-sm-2 col-form-label col-form-label-sm">Kennzeichen:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="inlineFormCustomSelect3">
-                      <option selected>z.B. Leistungen</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-              </div>
-              <div class="form-group row">
-                <label for="col12" class="col-sm-2 col-form-label col-form-label-sm">Objektnummer</label>
-                  <div class="col-sm-2">
-                    <input type="text" name="LeistObjektnummer" class="form-control form-control-sm" id="col12" placeholder="z.B. 0003" required>
-                  </div>
-                  <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary btn-sm">Objektsuche</button>
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label for="col4" class="col-sm-2 col-form-label col-form-label-sm">Objektname</label>
-                <div class="col-sm-10">
-                    <input type="text" name="LeistObjektname" class="form-control form-control-sm" id="col4" placeholder="z.B. Objekt" required>
-                </div>
-              </div>
-               <div class="form-group row">
-                  <label for="col5" class="col-sm-2 col-form-label col-form-label-sm">Objektstrasse</label>
-                <div class="col-sm-10">
-                    <input type="text" name="LeistObjektstrasse" class="form-control form-control-sm" id="col5" placeholder="z.B. Objektstrasse" required>
-                </div>
-              </div>
-              <div class="form-group row">
-                  <label for="col6" class="col-sm-2 col-form-label col-form-label-sm">PLZ/Ort:</label>
                 <div class="col-sm-3">
-                    <input type="text" name="LeistPLZ" class="form-control form-control-sm" id="col6" placeholder="z.B. PLZ" required>
+                  <input type="date" name="LeistDatum" class="form-control form-control-sm" id="col10"
+                         value="{{ editDay }}" placeholder="z.B. 0003" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inlineFormCustomSelect10"
+                       class="col-sm-2 col-form-label col-form-label-sm">Objektnummer</label>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="LeistObjektnummer"
+                          id="inlineFormCustomSelect10" required>
+                    <option selected>z.B. 000000</option>
+                    {% for o in objekt %}
+                    <option value="{{ o.Objekt_Nummer }}">{{ o.Objekt_Nummer }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" class="btn btn-primary btn-sm">Objektsuche</button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col4" class="col-sm-2 col-form-label col-form-label-sm">Objektname</label>
+                <div class="col-sm-10">
+                  <input type="text" name="LeistObjektname" class="form-control form-control-sm" id="col4"
+                         placeholder="z.B. Objekt" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col5" class="col-sm-2 col-form-label col-form-label-sm">Objektstrasse</label>
+                <div class="col-sm-10">
+                  <input type="text" name="LeistObjektstrasse" class="form-control form-control-sm" id="col5"
+                         placeholder="z.B. Objektstrasse" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col6" class="col-sm-2 col-form-label col-form-label-sm">PLZ/Ort:</label>
+                <div class="col-sm-3">
+                  <input type="text" name="LeistPLZ" class="form-control form-control-sm" id="col6"
+                         placeholder="z.B. PLZ" required>
                 </div>
                 <div class="col-sm-7">
-                    <input type="text" name="LeistOrt" class="form-control form-control-sm" id="col7" placeholder="z.B. Ort" required>
+                  <input type="text" name="LeistOrt" class="form-control form-control-sm" id="col7"
+                         placeholder="z.B. Ort" required>
                 </div>
               </div>
               <div class="form-group row align-items-center">
-                  <label for="inlineFormCustomSelect" class="col-sm-2 col-form-label col-form-label-sm">Titel/Untertitel-Nr:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" name="LeistTitel_Nr" id="inlineFormCustomSelect" required>
-                      <option selected>Titel</option>
-                      {% for t in titel %}
-                      <option value="{{ t.ID }}">{{ t.NR }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" name="LeistUntertitel_Nr" id="inlineFormCustomSelect2" required>
-                      <option selected>Untertitel-Nr</option>
-                      {% for ut in untertitel %}
-                      <option value="{{ ut.ID }}">{{ ut.NR }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-              </div>
-              <div class="form-group row">
-                <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label col-form-label-sm">Leistung:</label>
-                <div class="col-sm-10">
-                <textarea class="form-control" name="LeistLeistung" id="exampleFormControlTextarea1" rows="2" required></textarea>
+                <label for="inlineFormCustomSelect" class="col-sm-2 col-form-label col-form-label-sm">Titel/Untertitel-Nr:</label>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="LeistTitel_Nr" id="inlineFormCustomSelect"
+                          required>
+                    <option selected>Titel</option>
+                    {% for t in titel %}
+                    <option value="{{ t.NR }}">{{ t.NR }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="LeistUntertitel_Nr" id="inlineFormCustomSelect2"
+                          required>
+                    <option selected>Untertitel-Nr</option>
+                    {% for ut in untertitel %}
+                    <option value="{{ ut.NR }}">{{ ut.NR }}</option>
+                    {% endfor %}
+                  </select>
                 </div>
               </div>
-                <div class="form-group row">
+              <div class="form-group row">
+                <label for="exampleFormControlTextarea1"
+                       class="col-sm-2 col-form-label col-form-label-sm">Leistung:</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" name="LeistLeistung" id="exampleFormControlTextarea1" rows="2"
+                            required></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label for="col8" class="col-sm-2 col-form-label col-form-label-sm">Stunden:</label>
-                  <div class="col-sm-3">
-                    <input type="text" name="LeistStunden" class="form-control form-control-sm" id="col8" placeholder="z.B. Stundenanzahl" required>
-                  </div>
-                </div>
-              <div class="form-group row">
-                <label for="exampleFormControlTextarea12" class="col-sm-2 col-form-label col-form-label-sm">Bemerkung:</label>
-                <div class="col-sm-10">
-                <textarea class="form-control" name="LeistBemerkung" id="exampleFormControlTextarea12" rows="2" required></textarea>
+                <div class="col-sm-3">
+                  <input type="text" name="LeistStunden" class="form-control form-control-sm" id="col8"
+                         placeholder="z.B. Stundenanzahl" required>
                 </div>
               </div>
-              <button type="submit" name="save" class="btn btn-primary">Speichern</button>
+              <div class="form-group row">
+                <label for="exampleFormControlTextarea12"
+                       class="col-sm-2 col-form-label col-form-label-sm">Bemerkung:</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" name="LeistBemerkung" id="exampleFormControlTextarea12" rows="2"
+                            required></textarea>
+                </div>
+              </div>
             </div>
-          </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-              <button type="button" class="btn btn-primary">Neu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                <button type="submit" name="save" class="btn btn-primary">Speichern</button>
           </div>
+            </div>
+           </form>
         </div>
       </div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalReisekosten">Reisekosten</button>
-      <div class="modal fade bd-example-modal-lg" id="modalReisekosten" tabindex="-1" role="dialog" aria-labelledby="modalReisekostenLabel" aria-hidden="true">
+
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalReisekosten">Reisekosten
+      </button>
+      <div class="modal fade bd-example-modal-lg" id="modalReisekosten" tabindex="-1" role="dialog"
+           aria-labelledby="modalReisekostenLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
+           <form action="/stundenzettel" class="form" method="POST">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="modalReisekostenLabel">Reisekosten Eingabe</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group row">
                 <label for="col11" class="col-sm-2 col-form-label col-form-label-sm">Datum:</label>
-                  <div class="col-sm-2">
-                    <input type="email" class="form-control form-control-sm" id="col11" placeholder="z.B. 0003">
-                  </div>
-                  <label for="inlineFormCustomSelect3" class="col-sm-2 col-form-label col-form-label-sm">Kennzeichen:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="inlineFormCustomSelect4">
-                      <option selected>z.B. Leistungen</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-              </div>
-              <div class="form-group row">
-                <label for="col14" class="col-sm-2 col-form-label col-form-label-sm">Objektnummer</label>
-                  <div class="col-sm-2">
-                    <input type="email" class="form-control form-control-sm" id="col14" placeholder="z.B. 0003">
-                  </div>
-                  <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary btn-sm">Objektsuche</button>
-                  </div>
-              </div>
-              <div class="form-group row">
-                  <label for="col16" class="col-sm-2 col-form-label col-form-label-sm">Objektname</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control form-control-sm" id="col16" placeholder="z.B. Objekt">
-                </div>
-              </div>
-               <div class="form-group row">
-                  <label for="col17" class="col-sm-2 col-form-label col-form-label-sm">Objektstrasse</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control form-control-sm" id="col17" placeholder="z.B. Objektstrasse">
-                </div>
-              </div>
-              <div class="form-group row">
-                  <label for="col18" class="col-sm-2 col-form-label col-form-label-sm">PLZ/Ort:</label>
                 <div class="col-sm-3">
-                    <input type="email" class="form-control form-control-sm" id="col18" placeholder="z.B. PLZ">
+                  <input type="date" name="ReisekostenDatum" class="form-control form-control-sm" id="col11"
+                         value="{{ editDay }}" placeholder="z.B. 0003" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inlineFormCustomSelect11"
+                       class="col-sm-2 col-form-label col-form-label-sm">Objektnummer</label>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="ReisekostenObjektnummer"
+                          id="inlineFormCustomSelect11" required>
+                    <option selected>z.B. 000000</option>
+                    {% for o in objekt %}
+                    <option value="{{ o.Objekt_Nummer }}">{{ o.Objekt_Nummer }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" class="btn btn-primary btn-sm">Objektsuche</button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col16" class="col-sm-2 col-form-label col-form-label-sm">Objektname</label>
+                <div class="col-sm-10">
+                  <input type="text" name="ReisekostenObjektname" class="form-control form-control-sm" id="col16"
+                         placeholder="z.B. Objekt" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col17" class="col-sm-2 col-form-label col-form-label-sm">Objektstrasse</label>
+                <div class="col-sm-10">
+                  <input type="text" name="ReisekostenObjektstrasse" class="form-control form-control-sm" id="col17"
+                         placeholder="z.B. Objektstrasse">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col18" class="col-sm-2 col-form-label col-form-label-sm">PLZ/Ort:</label>
+                <div class="col-sm-3">
+                  <input type="text" name="ReisekostenPLZ" class="form-control form-control-sm" id="col18"
+                         placeholder="z.B. PLZ">
                 </div>
                 <div class="col-sm-7">
-                    <input type="email" class="form-control form-control-sm" id="col19" placeholder="z.B. Ort">
+                  <input type="text" name="ReisekostenOrt" class="form-control form-control-sm" id="col19"
+                         placeholder="z.B. Ort">
                 </div>
               </div>
 
               <div class="form-group row align-items-center">
-                  <label for="inlineFormCustomSelect7" class="col-sm-2 col-form-label col-form-label-sm">Reise-Art:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="inlineFormCustomSelect7">
-                      <option selected>z.B. Auto</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-              </div>
-
-              <div class="form-group row align-items-center">
-                  <label for="inlineFormCustomSelect5" class="col-sm-2 col-form-label col-form-label-sm">Titel/Untertitel-Nr:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="inlineFormCustomSelect5">
-                      <option selected>Titel</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="inlineFormCustomSelect6">
-                      <option selected>Untertitel-Nr</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-              </div>
-              <div class="form-group row">
-               <label for="col121" class="col-sm-2 col-form-label col-form-label-sm">Ziel:</label>
+                <label for="inlineFormCustomSelect7"
+                       class="col-sm-2 col-form-label col-form-label-sm">Reise-Art:</label>
                 <div class="col-sm-3">
-                    <input type="email" class="form-control form-control-sm" id="col121" placeholder="z.B. Stuttgart">
+                  <select class="custom-select custom-select-sm" name="ReisekostenReiseArt" id="inlineFormCustomSelect7"
+                          required>
+                    <option selected>z.B. Auto</option>
+                    {% for r in reiseart %}
+                    <option value="{{ r.ID }}">{{ r.ID }}</option>
+                    {% endfor %}
+                  </select>
                 </div>
-                <label for="inlineFormCustomSelect8" class="col-sm-2 col-form-label col-form-label-sm">Privat/Geschäftl. PKW</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="inlineFormCustomSelect8">
-                      <option selected>z.B. P für Privat</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
               </div>
-                <div class="form-group row">
-                <label for="col20" class="col-sm-2 col-form-label col-form-label-sm">Zweck:</label>
-                  <div class="col-sm-6">
-                    <input type="email" class="form-control form-control-sm" id="col20" placeholder="z.B. Installation">
-                  </div>
+
+              <div class="form-group row align-items-center">
+                <label for="inlineFormCustomSelect5" class="col-sm-2 col-form-label col-form-label-sm">Titel/Untertitel-Nr:</label>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="ReisekostenTitel" id="inlineFormCustomSelect5"
+                          required>
+                    <option selected>Titel</option>
+                    {% for t in titel %}
+                    <option value="{{ t.NR }}">{{ t.NR }}</option>
+                    {% endfor %}
+                  </select>
                 </div>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="ReisekostenUntertitel"
+                          id="inlineFormCustomSelect6" required>
+                    <option selected>Untertitel-Nr</option>
+                    {% for ut in untertitel %}
+                    <option value="{{ ut.NR }}">{{ ut.NR }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
               <div class="form-group row">
-                <label for="exampleFormControlTextarea14" class="col-sm-2 col-form-label col-form-label-sm">Bemerkung:</label>
+                <label for="col121" class="col-sm-2 col-form-label col-form-label-sm">Ziel:</label>
+                <div class="col-sm-3">
+                  <input type="text" name="ReisekostenZiel" class="form-control form-control-sm" id="col121"
+                         placeholder="z.B. Stuttgart" required>
+                </div>
+                <label for="inlineFormCustomSelect8" class="col-sm-2 col-form-label col-form-label-sm">Privat/Geschäftl.
+                  PKW</label>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="ReisekostenPrivat" id="inlineFormCustomSelect8"
+                          required>
+                    <option selected>z.B. Privat P / Geschäftl G</option>
+                    <option value="1">P</option>
+                    <option value="2">G</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="col20" class="col-sm-2 col-form-label col-form-label-sm">Zweck:</label>
+                <div class="col-sm-6">
+                  <input type="text" name="ReisekostenZweck" class="form-control form-control-sm" id="col20"
+                         placeholder="z.B. Installation" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="exampleFormControlTextarea14"
+                       class="col-sm-2 col-form-label col-form-label-sm">Bemerkung:</label>
                 <div class="col-sm-10">
-                <textarea class="form-control" id="exampleFormControlTextarea14" rows="2"></textarea>
+                  <textarea class="form-control" name="ReisekostenBemerkung" id="exampleFormControlTextarea14"
+                            rows="2"></textarea>
                 </div>
               </div>
             </div>
-          </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-              <button type="button" class="btn btn-primary">Neu</button>
-              <button type="button" class="btn btn-primary">Speichern</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                <button type="submit" name="Rsave" class="btn btn-primary">Speichern</button>
           </div>
+          </div>
+           </form>
         </div>
       </div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalSonstiges">Sonstiges</button>
-      <div class="modal fade bd-example-modal-lg" id="modalSonstiges" tabindex="-1" role="dialog" aria-labelledby="modalSonstigesLabel" aria-hidden="true">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalSonstiges">Sonstiges</button>
+      <div class="modal fade bd-example-modal-lg" id="modalSonstiges" tabindex="-1" role="dialog"
+           aria-labelledby="modalSonstigesLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
+           <form action="/stundenzettel" class="form" method="POST">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="modalSonstigesLabel">Sonstiges Leistung Eingabe</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group row">
                 <label for="sonstigesDatum" class="col-sm-2 col-form-label col-form-label-sm">Datum:</label>
-                  <div class="col-sm-3">
-                    <input type="email" class="form-control form-control-sm" id="sonstigesDatum" placeholder="z.B. 0003">
-                  </div>
-                  <label for="sonstigesKennzeichen" class="col-sm-2 col-form-label col-form-label-sm">Kennzeichen:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="sonstigesKennzeichen">
-                      <option selected>z.B. Leistungen</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
+                <div class="col-sm-3">
+                  <input type="date" name="SonstigesDatum" class="form-control form-control-sm" id="sonstigesDatum"
+                         value="{{ editDay }}" placeholder="z.B. 0003" required>
+                </div>
               </div>
               <div class="form-group row">
-              <label for="sonstigesLeistung" class="col-sm-2 col-form-label col-form-label-sm">Leistung:</label>
-                  <div class="col-sm-3">
-                    <select class="custom-select custom-select-sm" id="sonstigesLeistung">
-                      <option selected>z.B. Urlaub</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="sonstigesUrlaub" value="option1">
-                    <label class="form-check-label" for="sonstigesUrlaub">Urlaub:</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="sonstigesKrankheit" value="option2">
-                    <label class="form-check-label" for="sonstigesKrankheit">Krankheit:</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="sonstigesFreizeit" value="option1">
-                    <label class="form-check-label" for="sonstigesFreizeit">Freizeitausgleich:</label>
-                  </div>
+                <label for="sonstigesLeistung" class="col-sm-2 col-form-label col-form-label-sm">Leistung:</label>
+                <div class="col-sm-3">
+                  <select class="custom-select custom-select-sm" name="SonstigeLeistung" id="sonstigesLeistung"
+                          required>
+                    <option selected>z.B. Urlaub</option>
+                    <option value="Urlaub">Urlaub</option>
+                    <option value="Sonderurlaub">Sonderurlaub</option>
+                    <option value="Freizeitausgleich v. Überstunden">Freizeitausgleich v. Überstunden</option>
+                    <option value="Fehlzeit (unentschuldigt)">Fehlzeit (unentschuldigt)</option>
+                    <option value="Arztbesuche">Arztbesuche</option>
+                    <option value="Krank">Krank</option>
+                    <option value="Feiertag">Feiertag</option>
+                    <option value="Berufsschule">Berufsschule</option>
+                    <option value="Leistungsverzicht">Leistungsverzicht</option>
+                    <option value="Externes Vorstellungsgespräch">Externes Vorstellungsgespräch</option>
+                    <option value="keine Arbeitszeit">keine Arbeitszeit</option>
+                    <option value="Reha">Reha</option>
+                  </select>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="SonstigeUrlaub" type="checkbox" id="sonstigesUrlaub"
+                         value="option1">
+                  <label class="form-check-label" for="sonstigesUrlaub">Urlaub:</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="SonstigeKrankheit" type="checkbox" id="sonstigesKrankheit"
+                         value="option2">
+                  <label class="form-check-label" for="sonstigesKrankheit">Krankheit:</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="SonstigeFreizeit" type="checkbox" id="sonstigesFreizeit"
+                         value="option1">
+                  <label class="form-check-label" for="sonstigesFreizeit">Freizeitausgleich:</label>
+                </div>
               </div>
               <div class="form-group row">
-                <label for="sonstigesBemerkung" class="col-sm-2 col-form-label col-form-label-sm">Leistungsbemerkung:</label>
+                <label for="sonstigesBemerkung"
+                       class="col-sm-2 col-form-label col-form-label-sm">Leistungsbemerkung:</label>
                 <div class="col-sm-10">
-                <textarea class="form-control" id="sonstigesBemerkung" rows="2"></textarea>
+                  <textarea class="form-control" name="SonstigeBemerkung" id="sonstigesBemerkung" rows="2"></textarea>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="sonstigesStunden" class="col-sm-2 col-form-label col-form-label-sm">Stunden:</label>
-                  <div class="col-sm-3">
-                    <input type="email" class="form-control form-control-sm" id="sonstigesStunden" placeholder="z.B. Stundenanzahl">
-                  </div>
+                <div class="col-sm-3">
+                  <input type="text" name="SonstigeStunden" class="form-control form-control-sm" id="sonstigesStunden"
+                         placeholder="z.B. Stundenanzahl" required>
+                </div>
               </div>
               <div class="form-group row">
-                <label for="sonstigesBeschreibung" class="col-sm-2 col-form-label col-form-label-sm">Beschreibung:</label>
+                <label for="sonstigesBeschreibung"
+                       class="col-sm-2 col-form-label col-form-label-sm">Beschreibung:</label>
                 <div class="col-sm-10">
-                <textarea class="form-control" id="sonstigesBeschreibung" rows="2"></textarea>
+                  <textarea class="form-control" name="SonstigeBeschreibung" id="sonstigesBeschreibung"
+                            rows="2"></textarea>
                 </div>
               </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                <button type="submit" name="Ssave" class="btn btn-primary">Speichern</button>
           </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-              <button type="button" class="btn btn-primary">Neu</button>
-              <button type="button" class="btn btn-primary">Speichern</button>
           </div>
+           </form>
         </div>
       </div>
 
 
       <div class="float-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalArbeitszeiten">Arbeitszeiten</button>
-      <div class="modal fade bd-example-modal-lg" id="modalArbeitszeiten" tabindex="-1" role="dialog" aria-labelledby="modalArbeitszeitenLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalArbeitszeitenLabel">Arbeitszeiten</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalArbeitszeiten">
+          Arbeitszeiten
+        </button>
+        <div class="modal fade bd-example-modal-lg" id="modalArbeitszeiten" tabindex="-1" role="dialog"
+             aria-labelledby="modalArbeitszeitenLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalArbeitszeitenLabel">Arbeitszeiten</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="vonDatumArbeitszeiten" class="col-sm-1 col-form-label col-form-label-sm">von:</label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control form-control-sm" id="vonDatumArbeitszeiten"
+                           placeholder="tt.mm.jjjj" value="{{ vonDatum }}">
+                  </div>
+                  <label for="bisDatumArbeitszeiten" class="col-sm-1 col-form-label col-form-label-sm">bis:</label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control form-control-sm" id="bisDatumArbeitszeiten"
+                           placeholder="tt.mm.jjjj" value="{{ bisDatum }}">
+                  </div>
+                  <label for="kwArbeitszeiten" class="col-sm-1 col-form-label col-form-label-sm">KW:</label>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm"  id="kwArbeitszeiten" placeholder="" value="{{ kw[0]["Kalenderwoche"] }}">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Tag</label>
+                  <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Anfang</label>
+                  <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Ende</label>
+                  <label for="vonDatumArbeitszeiten"
+                         class="col-sm-2 col-form-label col-form-label-sm">Mittagspause(min)</label>
+                  <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Gesamt(h)</label>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag1DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag1AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag1EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag1MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag1GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag2DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag2AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag2EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag2MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag2GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag3DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag3AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag3EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag3MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag3GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag4DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag4AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag4EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag4MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag4GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag5DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag5AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag5EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag5MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag5GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag6DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag6AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag6EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag6MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag6GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag7DatumArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag7AnfangArbeitszeit"
+                           placeholder="tt.mm.jjjj">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag7EndeArbeitszeit" placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag7MittagspauseArbeitszeit"
+                           placeholder="">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control form-control-sm" id="Tag7GesamtArbeitszeit" placeholder="">
+                  </div>
+                </div>
+                <div class="float-right">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                  <button type="button" class="btn btn-primary">Speichern</button>
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-              <div class="form-group row">
-                <label for="vonDatumArbeitszeiten" class="col-sm-1 col-form-label col-form-label-sm">von:</label>
-                <div class="col-sm-3">
-                  <input type="text" class="form-control form-control-sm" id="vonDatumArbeitszeiten"  placeholder="tt.mm.jjjj">
-                </div>
-                <label for="bisDatumArbeitszeiten" class="col-sm-1 col-form-label col-form-label-sm">bis:</label>
-                <div class="col-sm-3">
-                  <input type="text" class="form-control form-control-sm" id="bisDatumArbeitszeiten"  placeholder="tt.mm.jjjj">
-                </div>
-                <label for="kwArbeitszeiten" class="col-sm-1 col-form-label col-form-label-sm">KW:</label>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="kwArbeitszeiten"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Tag</label>
-                <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Anfang</label>
-                <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Ende</label>
-                <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Mittagspause(min)</label>
-                <label for="vonDatumArbeitszeiten" class="col-sm-2 col-form-label col-form-label-sm">Gesamt(h)</label>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag1DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag1AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag1EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag1MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag1GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag2DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag2AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag2EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag2MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag2GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag3DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag3AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag3EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag3MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag3GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag4DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag4AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag4EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag4MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag4GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag5DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag5AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag5EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag5MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag5GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag6DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag6AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag6EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag6MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag6GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag7DatumArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag7AnfangArbeitszeit"  placeholder="tt.mm.jjjj">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag7EndeArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag7MittagspauseArbeitszeit"  placeholder="">
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control form-control-sm" id="Tag7GesamtArbeitszeit"  placeholder="">
-                </div>
-              </div>
-             </div>
-            </div>
-
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-              <button type="button" class="btn btn-primary">Speichern</button>
           </div>
         </div>
-      </div>
         <button type="button" class="btn btn-primary">Drucken</button>
         <button type="button" class="btn btn-primary">Loeschen</button>
-        <button type="button" class="btn btn-primary">Freigabe</button>
+        <form action="/stundenzettel" class="form" method="POST">
+        <button type="submit" name="freigabe" class="btn btn-primary">Freigabe</button>
+        </form>
       </div>
+    </div>
   </div>
-  </div>
-</form>
 {% endblock %}

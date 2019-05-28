@@ -25,5 +25,11 @@ class AbstractStundenzettel(AbstractObject):
     def save_leistung(self):
         pass
 
+    def save_reisekosten(self):
+        pass
+
+    def save_sonstiges(self):
+        pass
+
     def get_edit_day(self):
         pass
